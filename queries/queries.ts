@@ -11,7 +11,7 @@ export const GET_DRAGON = gql`
 `
 export const CREATE_DRAGON = gql`
   mutation CreateDragon($name: String!, $description: String!) {
-    insert_dragon_one(object: { name: $name, description: $decription }) {
+    insert_dragon_one(object: { name: $name, description: $description }) {
       id
       name
       description
@@ -21,7 +21,7 @@ export const CREATE_DRAGON = gql`
 export const UPDATE_DRAGON = gql`
   mutation UpdateDragon($id: uuid!, $name: String!, $description: String!) {
     update_dragon_by_pk(
-      pk_colmuns: { id: $id }
+      pk_columns: { id: $id }
       _set: { name: $name, description: $description }
     ) {
       id
