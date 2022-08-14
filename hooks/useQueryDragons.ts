@@ -1,19 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 import request from 'graphql-request'
-
 import { Dragon } from '../types/types'
-import { GET_DRAGONS } from '../queries/queries'
+import { GET_DRAGON } from '../queries/queries'
 
 interface DragonsResponse {
-  dragons: Dragon[]
+  dragon: Dragon[]
 }
 
 export const fetchDoragons = async () => {
-  const { dragons: data } = await request<DragonsResponse>(
-    `https://api.spacex.land/graphql`,
-    GET_DRAGONS
+  const { dragon } = await request<DragonsResponse>(
+    process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string,
+    GET_DRAGON
   )
-  return data
+  return dragon
 }
 
 export const useQueryDragons = () => {

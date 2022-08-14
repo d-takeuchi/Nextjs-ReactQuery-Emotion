@@ -46,10 +46,7 @@ const Layout: FC<Props> = ({ children, title }) => {
         <nav>
           <ul css={mainNav}>
             <li>
-              <Link href="/dragons">React Query Basic GraphQL</Link>
-            </li>
-            <li>
-              <Link href="/dragons">Mutation</Link>
+              <Link href="/dragons">React-Query-GraphQL</Link>
             </li>
           </ul>
         </nav>
