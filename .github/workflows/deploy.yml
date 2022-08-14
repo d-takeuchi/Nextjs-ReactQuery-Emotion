@@ -9,7 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      NEXT_PUBLIC_HASURA_ENDPOINT: ${{secrets.NEXT_PUBLIC_HASURA_ENDPOINT}}
     steps:
       # main ブランチを取得する
       - name: Checkout
@@ -29,8 +30,6 @@ jobs:
       # ビルドする
       - name: Build
         run: yarn build
-        env:
-          GITHUB_PAGES: true
       # GitHub Pages にデプロイする
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
