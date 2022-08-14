@@ -29,7 +29,8 @@ jobs:
       # ビルドする
       - name: Build
         run: yarn build
-
+        env:
+          GITHUB_PAGES: true
       # GitHub Pages にデプロイする
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
