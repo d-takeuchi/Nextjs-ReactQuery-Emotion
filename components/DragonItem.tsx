@@ -4,10 +4,18 @@ import { useMutationDragon } from '../hooks/useMutationDragon'
 import { setEditedDragon } from '../slices/uiSlice'
 import type { Dragon } from '../types/types'
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
+import { css } from '@emotion/react'
 
 interface Props {
   dragon: Dragon
 }
+
+const icon = css`
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0 5px;
+`
 
 export const DragonItem: FC<Props> = ({ dragon }) => {
   const dispatch = useDispatch()
@@ -22,6 +30,7 @@ export const DragonItem: FC<Props> = ({ dragon }) => {
       <span>{dragon.name}</span>
       <span>{dragon.description}</span>
       <PencilAltIcon
+        css={icon}
         onClick={() => {
           dispatch(
             setEditedDragon({
@@ -33,6 +42,7 @@ export const DragonItem: FC<Props> = ({ dragon }) => {
         }}
       />
       <TrashIcon
+        css={icon}
         onClick={() => {
           deleteDragonMutation.mutate(dragon.id)
         }}
