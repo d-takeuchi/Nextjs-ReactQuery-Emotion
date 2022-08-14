@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import request from 'graphql-request'
+import request, { GraphQLClient } from 'graphql-request'
 import { useDispatch } from 'react-redux'
 import { CREATE_DRAGON, UPDATE_DRAGON, DELETE_DRAGON } from '../queries/queries'
 import { resetEditedDragon } from '../slices/uiSlice'
@@ -14,9 +14,12 @@ export const useMutationDragon = () => {
   const queryClient = useQueryClient()
   const dispatch = useDispatch()
 
+  const graphQLClient = new GraphQLClient(
+    process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string
+  )
   const createDragonMutation = useMutation(
     ({ name, description }: InputDragon) =>
-      request(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, CREATE_DRAGON),
+      graphQLClient.request(CREATE_DRAGON, { name, description }),
     {
       onSuccess: (res) => {
         const previousDragons = queryClient.getQueryData<Dragon[]>(['dragons'])
@@ -30,9 +33,14 @@ export const useMutationDragon = () => {
       },
     }
   )
+
   const updateDragonMutation = useMutation(
     (dragon: EditDragon) =>
-      request(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, UPDATE_DRAGON),
+      graphQLClient.request(UPDATE_DRAGON, {
+        id: dragon.id,
+        name: dragon.name,
+        description: dragon.decription,
+      }),
     {
       onSuccess: (res, variables) => {
         const previousDragons = queryClient.getQueryData<Dragon[]>(['dragons'])
@@ -50,8 +58,7 @@ export const useMutationDragon = () => {
   )
 
   const deleteDragonMutation = useMutation(
-    (id: string) =>
-      request(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, DELETE_DRAGON),
+    (id: string) => graphQLClient.request(DELETE_DRAGON, { id }),
     {
       onSuccess: (res, variables) => {
         const previousDragons = queryClient.getQueryData<Dragon[]>(['dragons'])
