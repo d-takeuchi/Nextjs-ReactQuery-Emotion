@@ -32,7 +32,7 @@ export const UPDATE_DRAGON = gql`
 `
 export const DELETE_DRAGON = gql`
   mutation DeleteDragon($id: uuid!) {
-    delete_dragon_by_pk(pk_colmuns: { id: $id }) {
+    delete_dragon_by_pk(id: $id) {
       id
       name
       description
